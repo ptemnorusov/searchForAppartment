@@ -12,13 +12,9 @@ from keys import searchURL
 from keys import searchURLDomain
 from keys import CDNLink
 
-# Telegram bot token and chat id (replace with your own)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-
-
-DISCOVERED_LINKS_FILE = "discovered_links.json"
 
 def load_discovered_links():
     if os.path.exists(DISCOVERED_LINKS_FILE):
@@ -39,9 +35,6 @@ def load_discovered_links():
 def save_discovered_links(discovered_links):
     with open(DISCOVERED_LINKS_FILE, "w") as f:
         json.dump(list(discovered_links), f)
-
-
-discovered_links = load_discovered_links()
 
 
 def saveAndSentAd(url):
@@ -106,7 +99,6 @@ def saveAndSentAd(url):
         print(f"Error sending message or images: {e}")
 
 
-# Function to extract and print new links
 def extract_new_links():
     try:
         # Send a GET request to fetch the HTML content of the page
@@ -148,7 +140,6 @@ def extract_new_links():
         print(f"Error fetching the page: {e}")
 
 
-# Function to refresh and extract new links every 30 seconds
 def refresh_page():
     while True:
         print("Checking for new links...")
@@ -156,7 +147,12 @@ def refresh_page():
             extract_new_links()
         except:
             pass
-        time.sleep(60)  # Wait for 30 seconds before the next check
+        time.sleep(60)  # Wait for 60 seconds before the next check
+
+
+
+discovered_links = load_discovered_links()
+DISCOVERED_LINKS_FILE = "discovered_links.json"
 
 
 # Start the link extraction and refresh loop
